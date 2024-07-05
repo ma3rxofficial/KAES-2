@@ -81,6 +81,7 @@ pageStarted = printer.newPage()
 
 while true do
 	sendInfo(tostring(getSFKRE()))
+	print("")
 	print("DREG CHECK #"..tostring(dregI))
 
 	if rs.testBundledInput(cableSide, colors.white) == true and not alreadyTGValveON then
@@ -254,8 +255,8 @@ while true do
 	sfkre = getSFKRE()
 	reactivity = getInfo()
 	period = math.floor(getPeriod(sfkre, reactivity))
+	heat = getHeat()
 
-	print("")
 	print("SFKRE:           "..tostring(getSFKRE()))
 
 	if tostring(period) == "inf" or tostring(period) == "nan" then 
@@ -288,13 +289,17 @@ while true do
 		reactivityBolshe100 = false
 	end
 
-	if reactivity >= 100 reactivityBolshe100 then
-		reactivityBolshe100 = true
-		reactivityBolshe3000 = false
-		reactivityBolshe6200 = false
+	if heat < 100 then
+		heatBolshe100 = false
+	end
+
+	if heat >= 100 and not heatBolshe100 then
+		heatBolshe100 = true
+		heatBolshe3000 = false
+		heatBolshe6200 = false
 
 		print(" --------- WARNING --------- ")
-		print("	REACTIVITY >= 100")
+		print("	STEAM PRESSURE >= 100")
 		print(" REACTIVITY "..tostring(reactivity))
 		print(" PERIOD REACTIVITY "..tostring(period))
 		print(" SFKRE INCREASING SG+REACT ")
@@ -312,13 +317,13 @@ while true do
 		print(" PP INCREASING ")
 		print(" PARAMETERS REGISTERED ")
 		print(" --------- WARNING --------- ")
-	elseif reactivity >= 3000 then
-		reactivityBolshe100 = true
-		reactivityBolshe3000 = true
-		reactivityBolshe6200 = false
+	elseif heat >= 3000 and not heatBolshe3000 then
+		heatBolshe100 = true
+		heatBolshe3000 = true
+		heatBolshe6200 = false
 
 		print(" --------- WARNING --------- ")
-		print("	REACTIVITY >= 3000")
+		print("	STEAM PRESSURE >= 3000")
 		print(" REACTIVITY "..tostring(reactivity))
 		print(" PERIOD REACTIVITY "..tostring(period))
 		print(" SFKRE INCREASING SG+REACT ")
@@ -326,18 +331,30 @@ while true do
 		print(" HIGH TEMP SIGNAL ACTIVATED (>3000) ")
 		print(" PARAMETERS REGISTERED ")
 		print(" --------- WARNING --------- ")
-	elseif reactivity >= 6200 then
-		reactivityBolshe100 = true
-		reactivityBolshe3000 = true
-		reactivityBolshe6200 = true
+	elseif heat >= 6200 and not heatBolshe6200 then
+		heatBolshe100 = true
+		heatBolshe3000 = true
+		heatBolshe6200 = true
 
 		print(" --------- WARNING --------- ")
-		print("	REACTIVITY >= 6200")
+		print("	STEAM PRESSURE >= 6200")
 		print(" REACTIVITY "..tostring(reactivity))
 		print(" PERIOD REACTIVITY "..tostring(period))
 		print(" SFKRE INCREASING SG+REACT ")
 		print(" PP INCREASING ")
 		print(" CRIT TEMP SIGNAL ACTIVATED (>6200) ")
+		print(" PARAMETERS REGISTERED ")
+		print(" --------- WARNING --------- ")
+	elseif reactivity >= 100 and not reactivityBolshe100 then
+		reactivityBolshe100 = true
+
+		print(" --------- WARNING --------- ")
+		print("	REACTIVITY >= 100")
+		print(" PERIOD REACTIVITY    "..tostring(period))
+		print(" SFKRE    "..tostring(sfkre))
+		print(" SFKRE INCREASING PP+REACT ")
+		print(" PP INCREASING ")
+		print(" STEAM PRESSURE INCREASING")
 		print(" PARAMETERS REGISTERED ")
 		print(" --------- WARNING --------- ")
 	end
