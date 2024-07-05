@@ -6,6 +6,7 @@ local coords = "-1,4,-3"
 local cableSide = "right"
 local waitTime = 1
 local dregI = 1
+local prI = 0
 local nominal = 244
 local eulerNum = 2.71
 local contur1MAX = 18
@@ -14,12 +15,32 @@ local contur1 = tonumber(18)
 local contur2 = tonumber(0)
 local selsin = 0
 local selsinMAX = 15
+local pageStarted = false
 
 _print = print
 
 print = function(string)
+	if prI >= 21 then
+		if pageStarted then
+			printer.setPageTitle("DREG INFO")
+  			printer.endPage()
+  			pageStarted = false
+  		end
+
+  		pageStarted = printer.newPage()
+  		prI = 0
+	end
+
+	prI = prI + 1
+
 	logFile = fs.open("disk/log.txt", "a")
 	logFile.write(string.."\n")
+
+	if pageStarted then
+		printer.write(string)
+		printer.setCursorPos(1, prI)
+	end
+
 	logFile.close()
 	_print(string)
 end
@@ -55,13 +76,11 @@ function sendInfo(string)
 	fileInfo.close()
 end
 
+pageStarted = printer.newPage()
+
 while true do
 	sendInfo(tostring(getSFKRE()))
-	printer.newPage()
-
 	print("DREG CHECK #"..tostring(dregI))
-	printer.write("DREG CHECK #"..tostring(dregI))
-	printer.setCursorPos(1, 2)
 
 	if rs.testBundledInput(cableSide, colors.white) == true and not alreadyTGValveON then
 		print("TG VALVE OPEN")
@@ -235,12 +254,6 @@ while true do
 	reactivity = getInfo()
 	period = math.floor(getPeriod(sfkre, reactivity))
 
-	printer.write("SFKRE:       "..tostring(sfkre))
-	printer.setCursorPos(1, 3)
-	printer.write("PERIOD:      "..string.upper(tostring(period)))
-	printer.setCursorPos(1, 4)
-	printer.write("REACTIVITY:  "..tostring(reactivity))
-
 	print("SFKRE:           "..tostring(getSFKRE()))
 
 	if tostring(period) == "inf" or tostring(period) == "nan" then 
@@ -325,8 +338,5 @@ while true do
 	end
 
 	dregI = dregI + 1
-	printer.setPageTitle("DREG INFO")
-  	printer.endPage()
-
 	sleep(waitTime)
 end
