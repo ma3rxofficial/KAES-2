@@ -252,7 +252,13 @@ while true do
 	print("REACTIVITY:      "..tostring(reactivity))
 	print("")
 
-	if period >= 30 and not tostring(period) == "inf" then
+	if sfkre <= nominal then
+		bolsheNominala = false
+	end
+
+	if period <= 30 and not tostring(period) == "inf" and not periodMenshe30 then
+		periodMenshe30 = true
+
 		print(" --------- WARNING --------- ")
 		print("	PERIOD >= 30")
 		print(" PERIOD "..tostring(period))
@@ -260,7 +266,15 @@ while true do
 		print(" PP INCREASING ")
 		print(" PARAMETERS REGISTERED ")
 		print(" --------- WARNING --------- ")
-	elseif reactivity >= 100 and reactivity < 3000 then
+	else
+		periodMenshe30 = false
+	end
+
+	if reactivity >= 100 and reactivity < 3000 and not reactivityBolshe100 then
+		reactivityBolshe100 = true
+		reactivityBolshe3000 = false
+		reactivityBolshe6200 = false
+
 		print(" --------- WARNING --------- ")
 		print("	REACTIVITY >= 100")
 		print(" REACTIVITY "..tostring(reactivity))
@@ -269,7 +283,9 @@ while true do
 		print(" PP INCREASING ")
 		print(" PARAMETERS REGISTERED ")
 		print(" --------- WARNING --------- ")
-	elseif sfkre > nominal then
+	elseif sfkre > nominal and not bolsheNominala then
+		bolsheNominala = true
+
 		print("--------- WARNING --------- ")
 		print("	SFKRE > DENOMINATION("..tostring(nominal)..")")
 		print(" SFKRE "..tostring(sfkre))
@@ -279,6 +295,10 @@ while true do
 		print(" PARAMETERS REGISTERED ")
 		print(" --------- WARNING --------- ")
 	elseif reactivity >= 3000 and reactivity < 6200 then
+		reactivityBolshe100 = true
+		reactivityBolshe3000 = true
+		reactivityBolshe6200 = false
+
 		print(" --------- WARNING --------- ")
 		print("	REACTIVITY >= 3000")
 		print(" REACTIVITY "..tostring(reactivity))
@@ -289,6 +309,10 @@ while true do
 		print(" PARAMETERS REGISTERED ")
 		print(" --------- WARNING --------- ")
 	elseif reactivity >= 6200 then
+		reactivityBolshe100 = true
+		reactivityBolshe3000 = true
+		reactivityBolshe6200 = true
+
 		print(" --------- WARNING --------- ")
 		print("	REACTIVITY >= 6200")
 		print(" REACTIVITY "..tostring(reactivity))
