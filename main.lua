@@ -222,7 +222,7 @@ while true do
 			contur2 = contur2 - 1
 			print("PRESSURE IN CIRCUIT #2 CHANGED")
 			print("PRESSURE IN CIRCUIT #2 DECREASED")
-			print("PRESSURE IN CIRCUIT #1:		"..tostring(contur2))
+			print("PRESSURE IN CIRCUIT #2:		"..tostring(contur2))
 			print("PARAMETERS REGISTERED")
 		end
 
@@ -244,7 +244,7 @@ while true do
 			print("PRESSURE IN CIRCUIT #1:		"..tostring(contur1))
 			print("PARAMETERS REGISTERED")
 		else
-			contur2 = contur2 - 1
+			contur1 = contur1 - 1
 			print("PRESSURE IN CIRCUIT #1 CHANGED")
 			print("PRESSURE IN CIRCUIT #1 DECREASED")
 			print("PRESSURE IN CIRCUIT #1:		"..tostring(contur1))
