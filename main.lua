@@ -28,6 +28,7 @@ print = function(string)
   		end
 
   		pageStarted = printer.newPage()
+
   		prI = 0
 	end
 
@@ -254,6 +255,7 @@ while true do
 	reactivity = getInfo()
 	period = math.floor(getPeriod(sfkre, reactivity))
 
+	print("")
 	print("SFKRE:           "..tostring(getSFKRE()))
 
 	if tostring(period) == "inf" or tostring(period) == "nan" then 
@@ -263,7 +265,6 @@ while true do
 	end
 
 	print("REACTIVITY:      "..tostring(reactivity))
-	print("")
 
 	if sfkre <= nominal then
 		bolsheNominala = false
@@ -273,7 +274,7 @@ while true do
 		periodMenshe30 = true
 
 		print(" --------- WARNING --------- ")
-		print("	PERIOD >= 30")
+		print("	PERIOD =< 30")
 		print(" PERIOD "..tostring(period))
 		print(" SFKRE INCREASING PP+REACT ")
 		print(" PP INCREASING ")
@@ -283,7 +284,11 @@ while true do
 		periodMenshe30 = false
 	end
 
-	if reactivity >= 100 and reactivity < 3000 and not reactivityBolshe100 then
+	if reactivity < 100 then
+		reactivityBolshe100 = false
+	end
+
+	if reactivity >= 100 reactivityBolshe100 then
 		reactivityBolshe100 = true
 		reactivityBolshe3000 = false
 		reactivityBolshe6200 = false
@@ -307,7 +312,7 @@ while true do
 		print(" PP INCREASING ")
 		print(" PARAMETERS REGISTERED ")
 		print(" --------- WARNING --------- ")
-	elseif reactivity >= 3000 and reactivity < 6200 then
+	elseif reactivity >= 3000 then
 		reactivityBolshe100 = true
 		reactivityBolshe3000 = true
 		reactivityBolshe6200 = false
