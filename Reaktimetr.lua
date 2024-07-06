@@ -40,9 +40,13 @@ function infoDisk()
 		sfkre = getSFKRE()
 		reactivity = getInfo("2.dat")
 		period = getPeriod(sfkre, tonumber(reactivity))
+		heat = getHeat()
+		pp = getPP()
 
 		sendInfo(tostring(sfkre), "3.dat")
 		sendInfo(tostring(period), "4.dat")
+		sendInfo(tostring(heat), "5.dat")
+		sendInfo(tostring(pp), "6.dat")
 
 		sleep(0)
 	end
