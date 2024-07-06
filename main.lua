@@ -88,6 +88,12 @@ while true do
 		print("TG VALVE OPEN")
 		print("INCREASING PRESSURE")
 
+		if rs.testBundledInput(cableSide, colors.lime) == false then
+			print("NO PP PVK")
+			print("NO PP NVK")
+			print("SP    0")
+		end
+
 		alreadyTGValveON = true
 		alreadyTGValveOFF = false
 	elseif rs.testBundledInput(cableSide, colors.white) == false and not alreadyTGValveOFF then
@@ -116,16 +122,18 @@ while true do
 
 	if rs.testBundledInput(cableSide, colors.magenta) == true and not alreadyAZON then
 		print("AZ SUZ")
-		print("DECREASING CELLS KOL-VO")
+		print("DECREASING CELLS")
 		print("DECREASING CELLS AUTO")
+		print("DECREASING CELLS AZ SUZ")
 		print("PARAMETERS REGISTERED")
 
 		alreadyAZON = true
 		alreadyAZOFF = false
 	elseif rs.testBundledInput(cableSide, colors.magenta) == false and not alreadyAZOFF then
 		print("AZ SUZ")
-		print("STOP DECREASING CELLS KOL-VO")
+		print("STOP DECREASING CELLS")
 		print("STOP DECREASING CELLS AUTO")
+		print("STOP DECREASING CELLS AZ SUZ")
 		print("PARAMETERS REGISTERED")
 
 		alreadyAZOFF = true
@@ -135,13 +143,15 @@ while true do
 	if rs.testBundledInput(cableSide, colors.lime) == true and not alreadyPGON then
 		print("STEAM GENERATION STARTED")
 		print("PP(START)		"..tostring(getPP()))
+		print("SP CHANGE")
+		print("SP CHANGE AUTO")
 		print("PARAMETERS REGISTERED")
 
 		alreadyPGON = true
 		alreadyPGOFF = false
 	elseif rs.testBundledInput(cableSide, colors.lime) == false and not alreadyPGOFF then
 		print("STEAM GENERATION STOPPED")
-		print("PP 0")
+		print("PP    0")
 		print("PARAMETERS REGISTERED")
 
 		if getSFKRE() > 0 then
@@ -157,16 +167,12 @@ while true do
 
 	if rs.testBundledInput(cableSide, colors.pink) == true and not alreadyTransON then
 		print("TG STARTED GENERATOR")
-		print("SN ACTIVATED")
-		print("SN AUTO(TG)")
 		print("PARAMETERS REGISTERED")
 
 		alreadyTransON = true
 		alreadyTransOFF = false
 	elseif rs.testBundledInput(cableSide, colors.pink) == false and not alreadyTransOFF then
 		print("TG STOPPED GENERATOR")
-		print("SN DISABLED")
-		print("SN AUTO(NO STEAM TG)")
 		print("PARAMETERS REGISTERED")
 
 		alreadyTransOFF = true
@@ -179,10 +185,10 @@ while true do
 		if not selsin == 0 then
 			selsin = selsin - 1
 			print("POWER DECREASED")
-			print("SUZ: "..tostring(selsin))
+			print("SUZ:    "..tostring(selsin))
 		else
 			print("SUZ NK")
-			print("SUZ: "..tostring(selsin))
+			print("SUZ:    "..tostring(selsin))
 		end
 
 		print("PARAMETERS REGISTERED")
@@ -192,10 +198,10 @@ while true do
 		if not selsin == selsinMAX then
 			selsin = selsin + 1
 			print("POWER INCREASED")
-			print("SUZ: "..tostring(selsin))
+			print("SUZ:    "..tostring(selsin))
 		else
 			print("SUZ VK")
-			print("SUZ: "..tostring(selsin))
+			print("SUZ:    "..tostring(selsin))
 		end
 
 		print("PARAMETERS REGISTERED")
