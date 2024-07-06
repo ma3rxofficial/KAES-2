@@ -63,26 +63,31 @@ function getPP()
 	return sensor.getTargetDetails(coords)["Output"] * 3.2
 end
 
-function getInfo()
-	fileInfo = fs.open("disk/2.dat", "r")
+function getInfo(file)
+	fileInfo = fs.open("disk/"..file, "r")
 	fileData = fileInfo.readAll()
 	fileInfo.close()
 
 	return tonumber(fileData)
 end
 
-function sendInfo(string)
-	fileInfo = fs.open("disk/1.dat", "w")
-	fileInfo.write(string)
-	fileInfo.close()
-end
-
 pageStarted = printer.newPage()
 
 while true do
-	sendInfo(tostring(getSFKRE()))
 	print("")
 	print("DREG CHECK #"..tostring(dregI))
+
+	sfkre = getInfo("3.dat")
+	reactivity = getInfo("2.dat")
+	local period = getInfo("4.dat")
+	heat = getInfo("5.dat")
+	pp = getInfo("6.dat")
+
+	if period == nil then
+		period = 1/0
+	else
+		period = math.floor(period)
+	end
 
 	if rs.testBundledInput(cableSide, colors.white) == true and not alreadyTGValveON then
 		print("TG VALVE OPEN")
@@ -91,7 +96,7 @@ while true do
 		if rs.testBundledInput(cableSide, colors.lime) == false then
 			print("NO PP PVK")
 			print("NO PP NVK")
-			print("SP    0")
+			print("SP 0")
 		end
 
 		alreadyTGValveON = true
@@ -151,7 +156,7 @@ while true do
 		alreadyPGOFF = false
 	elseif rs.testBundledInput(cableSide, colors.lime) == false and not alreadyPGOFF then
 		print("STEAM GENERATION STOPPED")
-		print("PP    0")
+		print("PP 0")
 		print("PARAMETERS REGISTERED")
 
 		if getSFKRE() > 0 then
@@ -182,26 +187,26 @@ while true do
 	if rs.testBundledInput(cableSide, colors.lightBlue) then
 		print("DECREASING POWER")
 
-		if not selsin == 0 then
+		if selsin == 0 then
+			print("SUZ NK")
+			print("SUZ: "..tostring(selsin))
+		else
 			selsin = selsin - 1
 			print("POWER DECREASED")
-			print("SUZ:    "..tostring(selsin))
-		else
-			print("SUZ NK")
-			print("SUZ:    "..tostring(selsin))
+			print("SUZ: "..tostring(selsin))
 		end
 
 		print("PARAMETERS REGISTERED")
 	elseif rs.testBundledInput(cableSide, colors.yellow) then
 		print("INCREASING POWER")
 
-		if not selsin == selsinMAX then
+		if selsin == selsinMAX then
+			print("SUZ VK")
+			print("SUZ: "..tostring(selsin))
+		else
 			selsin = selsin + 1
 			print("POWER INCREASED")
-			print("SUZ:    "..tostring(selsin))
-		else
-			print("SUZ VK")
-			print("SUZ:    "..tostring(selsin))
+			print("SUZ: "..tostring(selsin))
 		end
 
 		print("PARAMETERS REGISTERED")
@@ -257,11 +262,6 @@ while true do
 			print("PARAMETERS REGISTERED")
 		end
 	end
-
-	sfkre = getSFKRE()
-	reactivity = getInfo()
-	period = math.floor(getPeriod(sfkre, reactivity))
-	heat = getHeat()
 
 	print("SFKRE:           "..tostring(getSFKRE()))
 
