@@ -275,6 +275,8 @@ while true do
 
 	if sfkre <= nominal then
 		bolsheNominala = false
+		bolsheNominalaV2raza = false
+		bolsheNominalaV10raz = false
 	end
 
 	if period <= 30 and not tostring(period) == "inf" and not periodMenshe30 then
@@ -318,6 +320,8 @@ while true do
 		print(" --------- WARNING --------- ")
 	elseif sfkre > nominal and not bolsheNominala then
 		bolsheNominala = true
+		bolsheNominalaV2raza = false
+		bolsheNominalaV10raz = false
 
 		print("--------- WARNING --------- ")
 		print("	SFKRE > DENOMINATION("..tostring(nominal)..")")
@@ -329,6 +333,42 @@ while true do
 		print(" SP CHANGE NOT AUTO")
 		print(" PARAMETERS REGISTERED ")
 		print(" --------- WARNING --------- ")
+	elseif sfkre >= nominal*2 and not bolsheNominalaV2raza then
+		bolsheNominala = true
+		bolsheNominalaV2raza = true
+		bolsheNominalaV10raz = false
+
+		print("--------- WARNING --------- ")
+		print("	SFKRE > DENOMINATION("..tostring(nominal)..") * 2")
+		print(" SFKRE "..tostring(sfkre))
+		print(" PERIOD "..tostring(period))
+		print(" SFKRE INCREASING SG+REACT")
+		print(" PP INCREASING ")
+		print("	SP CHANGE")
+		print(" SP CHANGE NOT AUTO")
+		print(" REFIX CONTUR #1")
+		print(" REFIX CONTUR #2")
+		print(" *2 WARNING")
+		print(" PARAMETERS REGISTERED ")
+		print(" --------- WARNING --------- ")
+	elseif sfkre >= nominal*10 and not bolsheNominalaV10raz then
+		bolsheNominala = true
+		bolsheNominalaV2raza = true
+		bolsheNominalaV10raz = true
+
+		print("--------- WARNING --------- ")
+		print("	SFKRE > DENOMINATION("..tostring(nominal)..") * 10")
+		print(" SFKRE "..tostring(sfkre))
+		print(" PERIOD "..tostring(period))
+		print(" SFKRE INCREASING SG+REACT")
+		print(" PP INCREASING ")
+		print("	SP CHANGE")
+		print(" SP CHANGE NOT AUTO")
+		print(" REFIX CONTUR #1")
+		print(" REFIX CONTUR #2")
+		print(" *2 WARNING")
+		print(" *10 WARNING")
+		print(" PARAMETERS REGISTERED ")
 	elseif heat >= 3000 and not heatBolshe3000 then
 		heatBolshe100 = true
 		heatBolshe3000 = true
