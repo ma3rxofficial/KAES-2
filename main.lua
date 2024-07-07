@@ -162,6 +162,9 @@ while true do
 		if getSFKRE() > 0 then
 			print(" --------- WARNING --------- ")
 			print(" NO TO IN REACTOR ")
+			print("	SFKRE > 0")
+			print(" NO SG")
+			print(" SP 0")
 			print(" PARAMETERS REGISTERED ")
 			print(" --------- WARNING --------- ")
 		end
