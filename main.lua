@@ -1,5 +1,8 @@
 os.loadAPI("ocs/apis/sensor")
+os.loadAPI("JSON")
 
+local timeResponse = http.get("http://worldtimeapi.org/api/timezone/Europe/Moscow").readAll()
+local dateTime = JSON.decode(timeResponse)
 local sensor = sensor.wrap("top:white")
 local printer = peripheral.wrap("bottom")
 local coords = "-1,4,-3"
@@ -17,12 +20,14 @@ local selsin = 0
 local selsinMAX = 15
 local pageStarted = false
 
+dateTime = string.sub(dateTime.datetime, 1, -23)
 _print = print
 
 print = function(string)
+	_print(string)
 	if prI >= 21 then
 		if pageStarted then
-			printer.setPageTitle("DREG INFO")
+			printer.setPageTitle("DREG INFO "..dateTime)
   			printer.endPage()
   			pageStarted = false
   		end
@@ -34,16 +39,14 @@ print = function(string)
 
 	prI = prI + 1
 
-	logFile = fs.open("disk/log.txt", "a")
+	logFile = fs.open("disk/".."log_"..dateTime..".txt", "a")
 	logFile.write(string.."\n")
+	logFile.close()
 
 	if pageStarted then
 		printer.write(string)
 		printer.setCursorPos(1, prI)
 	end
-
-	logFile.close()
-	_print(string)
 end
 
 function getInfo(file)
@@ -57,8 +60,14 @@ end
 pageStarted = printer.newPage()
 
 while true do
+	responseNew = http.get("http://worldtimeapi.org/api/timezone/Europe/Moscow").readAll()
+
+	response2 = JSON.decode(responseNew)
+	timeRN = string.sub(response2.datetime, 12, -14)
+
+
 	print("")
-	print("DREG CHECK #"..tostring(dregI))
+	print("DREG CHECK #"..tostring(dregI).." "..timeRN)
 
 	sfkre = getInfo("3.dat")
 	reactivity = getInfo("2.dat")
