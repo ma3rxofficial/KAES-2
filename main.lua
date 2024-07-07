@@ -46,23 +46,6 @@ print = function(string)
 	_print(string)
 end
 
-
-function getSFKRE()
-	return sensor.getTargetDetails(coords)["Heat"] + sensor.getTargetDetails(coords)["Output"] * 3.2
-end
-
-function getPeriod(N, r)
-	return N*eulerNum/r
-end
-
-function getHeat()
-	return sensor.getTargetDetails(coords)["Heat"]
-end
-
-function getPP()
-	return sensor.getTargetDetails(coords)["Output"] * 3.2
-end
-
 function getInfo(file)
 	fileInfo = fs.open("disk/"..file, "r")
 	fileData = fileInfo.readAll()
@@ -147,7 +130,7 @@ while true do
 
 	if rs.testBundledInput(cableSide, colors.lime) == true and not alreadyPGON then
 		print("STEAM GENERATION STARTED")
-		print("PP(START)		"..tostring(getPP()))
+		print("PP(START)		"..tostring(pp))
 		print("SP CHANGE")
 		print("SP CHANGE AUTO")
 		print("PARAMETERS REGISTERED")
@@ -159,7 +142,7 @@ while true do
 		print("PP 0")
 		print("PARAMETERS REGISTERED")
 
-		if getSFKRE() > 0 then
+		if sfkre > 0 then
 			print(" --------- WARNING --------- ")
 			print(" NO TO IN REACTOR ")
 			print("	SFKRE > 0")
@@ -266,7 +249,7 @@ while true do
 		end
 	end
 
-	print("SFKRE:           "..tostring(getSFKRE()))
+	print("SFKRE:           "..tostring(sfkre))
 
 	if tostring(period) == "inf" or tostring(period) == "nan" then 
 		print("PERIOD:          INF")
