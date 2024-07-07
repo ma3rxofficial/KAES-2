@@ -7,7 +7,7 @@ local sensor = sensor.wrap("top:white")
 local printer = peripheral.wrap("bottom")
 local coords = "-1,4,-3"
 local cableSide = "right"
-local waitTime = 1
+local waitTime = 0.5
 local dregI = 1
 local prI = 0
 local nominal = 244
@@ -39,7 +39,12 @@ print = function(string)
 
 	prI = prI + 1
 
-	logFile = fs.open("disk/".."log_"..dateTime..".txt", "a")
+	if not response2 then
+		logFile = fs.open("disk/".."log_"..dateTime..".txt", "a")
+	else
+		dateTime = string.sub(response2.datetime, 1, -23)
+		logFile = fs.open("disk/".."log_"..dateTime..".txt", "a")
+	end
 	logFile.write(string.."\n")
 	logFile.close()
 
@@ -62,7 +67,7 @@ pageStarted = printer.newPage()
 while true do
 	responseNew = http.get("http://worldtimeapi.org/api/timezone/Europe/Moscow").readAll()
 
-	response2 = JSON.decode(responseNew)
+	local response2 = JSON.decode(responseNew)
 	timeRN = string.sub(response2.datetime, 12, -14)
 
 
