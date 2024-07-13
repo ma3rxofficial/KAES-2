@@ -1,11 +1,8 @@
-os.loadAPI("ocs/apis/sensor")
 os.loadAPI("JSON")
 
 local timeResponse = http.get("http://worldtimeapi.org/api/timezone/Europe/Moscow").readAll()
 local dateTime = JSON.decode(timeResponse)
-local sensor = sensor.wrap("top:white")
 local printer = peripheral.wrap("bottom")
-local coords = "-1,4,-3"
 local cableSide = "right"
 local waitTime = 0.5
 local dregI = 1
