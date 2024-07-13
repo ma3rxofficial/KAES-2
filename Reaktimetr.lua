@@ -43,6 +43,13 @@ function infoDisk()
 		heat = getHeat()
 		pp = getPP()
 
+		print("DISK 1 -> [SFKRE "..tostring(sfkre).."]")
+		print("DISK 2 -> [REACTIVITY "..tostring(reactivity).."]")
+		print("DISK 3 -> [PERIOD "..string.upper(tostring(period)).."]")
+		print("DISK 4 -> [S-PRESSURE "..tostring(heat).."]")
+		print("DISK 5 -> [S-GENERATOR "..tostring(pp).."]")
+		print("---------------------------------------------------")
+
 		sendInfo(tostring(sfkre), "3.dat")
 		sendInfo(tostring(period), "4.dat")
 		sendInfo(tostring(heat), "5.dat")
