@@ -18,18 +18,10 @@ local selsin = 0
 local selsinMAX = 15
 local pageStarted = false
 
--- я в рот если честно ебал этот сайт для времени, но почему-то только он в CC работает, и то с перебоями. уж простите
-local timeResponse
 local dateTime = "00:00:00"
 
 function timeGet()
-	if not http.get("http://worldtimeapi.org/api/timezone/Europe/Moscow") then
-		dateTime = "00:00:00"
-	else
-		timeResponse = http.get("http://worldtimeapi.org/api/timezone/Europe/Moscow").readAll()
-		dateTime = JSON.decode(timeResponse)
-		dateTime = string.sub(dateTime.datetime, 12, -14)
-	end
+	dateTime = "00:00:00"
 
 	return dateTime
 end
