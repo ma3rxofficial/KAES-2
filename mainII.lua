@@ -17,9 +17,12 @@ local selsinMAX = 15
 local pageStarted = false
 
 local dateTime = "00:00:00"
+local serverTimeEnabled = true
 
 function timeGet()
-	dateTime = "00:00:00"
+	if serverTimeEnabled then
+		dateTime = http.get("http://localhost:8056/").readAll()
+	end
 
 	return dateTime
 end
