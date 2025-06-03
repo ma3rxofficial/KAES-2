@@ -40,7 +40,6 @@ function showDREGHeader()
 	print("")
 	print("DREG CHECK #"..tostring(dregI).." "..timeRN)
 	dregI = dregI + 1
-	_print(dregI)
 end
 
 print = function(string)
