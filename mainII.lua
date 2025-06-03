@@ -53,7 +53,7 @@ print = function(string)
 	_print(string)
 	if prI >= 21 then
 		if pageStarted then
-			printer.setPageTitle("DREG INFO "..dateTime)
+			printer.setPageTitle("DREG INFO "..string.gsub(dateTime, "-", "."))
   			printer.endPage()
   			pageStarted = false
   		end
@@ -69,7 +69,6 @@ print = function(string)
 		dateTime = string.sub(timeGet(), 1, -10)
 		logFile = fs.open("disk/".."log_"..dateTime..".txt", "a")
 	else
-		dateTime = string.sub(timeDregCheck, 1, -10)
 		logFile = fs.open("disk/".."log_"..dateTime..".txt", "a")
 	end
 
@@ -103,6 +102,7 @@ while true do
 
 	timeRN = timeGet()
 	timeDregCheck = timeRN
+	dateTime = string.sub(timeDregCheck, 1, -10)
 
 	sfkre = getInfo("3.dat")
 	reactivity = getInfo("2.dat")
